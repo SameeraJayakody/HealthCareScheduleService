@@ -97,7 +97,7 @@ public class scheduleAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		Map paras = getParasMap(request);
-		String output = itemObj.deleteItem(paras.get("id").toString());
+		String output = itemObj.deleteItem(paras.get("ID").toString());
 		response.getWriter().write(output);
 		
 		

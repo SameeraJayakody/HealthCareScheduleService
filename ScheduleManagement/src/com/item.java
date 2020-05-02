@@ -54,26 +54,26 @@ public class item {
 				con.close();
 				
 				
-				output = "Inserted successfully";
+				//output = "Inserted successfully";
 				
-			/*
-			 * String newItems = readItems(); output =
-			 * "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
-			 */
+			
+			  String newItems = readItems(); 
+			  output ="{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
+			 
 				
 				
 			
 
 			} catch (Exception e) {
 				
-			/*
-			 * output =
-			 * "{\"status\":\"error\", \"data\":\"Error while inserting the item.\"}";
-			 * System.err.println(e.getMessage());
-			 */
+			
+			  output =  "{\"status\":\"error\", \"data\":\"Error while inserting the item.\"}";
+			  System.err.println(e.getMessage());
+			 
 				
-				output = "Error while inserting";
-				System.err.println(e.getMessage());
+			/*
+			 * output = "Error while inserting"; System.err.println(e.getMessage());
+			 */
 				
 				
 			}
@@ -98,7 +98,7 @@ public class item {
 					return "Error while connecting to the database for reading.";
 				}
 				// Prepare the html table to be displayed
-				output = "<table border=\"1\" align=\"center\"><tr><th>scheduleID</th>"
+				output = "<table border=\'1\' align=\"center\"><tr><th>scheduleID</th>"
 						+ "<th>HospitalID</th><th>HospitalName</th>" + "<th>DoctorID</th>" + "<th>DoctorName</th>"
 						+ "<th>Speciality</th>" + "<th>Date</th>" + "<th>StartTime</th>" + "<th>EndTime</th>"
 						+ "<th>RoomNumber</th>" + "<th>Status</th>" + "<th>Update</th>"+ "<th>Remove</th></tr>";
@@ -108,7 +108,7 @@ public class item {
 				ResultSet rs = stmt.executeQuery(query);
 				// iterate through the rows in the result set
 				while (rs.next()) {
-					String id = Integer.toString(rs.getInt("ID"));
+					int id = rs.getInt("ID");
 					String sid = rs.getString("scheduleID");
 					String hid = rs.getString("HospitalID");
 					String hn = rs.getString("HospitalName");
@@ -121,10 +121,10 @@ public class item {
 					String rm = rs.getString("RoomNumber");
 					String sts = rs.getString("Status");
 					// Add into the html table
-					output += "<tr><td><input id=\"hidItemIDUpdate\""
-							+ "name=\"hidItemIDUpdate\""
-							+ "type=\"hidden\" value=\"" + id + "\">" + sid + "</td>";
-					output += "<td>" + hid + "</td>";
+					output += "<tr><td><input id='hidItemIDUpdate'"
+							+ "name='hidItemIDUpdate' type='hidden'"
+							+ "value='" + id + "'>" + sid + "</td>";
+				    output += "<td>" + hid + "</td>";
 					output += "<td>" + hn + "</td>";
 					output += "<td>" + did + "</td>";
 					output += "<td>" + dn + "</td>";
@@ -136,14 +136,12 @@ public class item {
 					output += "<td>" + sts + "</td>";
 					// buttons
 					
-					output += "<td><input name=\"btnUpdate\""
-							+ "type=\"button\" value=\"Update\""
-							+ "class=\" btnUpdate btn btn-secondary\"></td>"
-							+ "<td><form method=\"post\" action=\"TimeCollector.jsp\">"
-							+ "<input name=\"btnRemove\" type=\"submit\""
-							+ "value=\"Remove\" class=\"btn btn-danger\">"
-							+ "<input name=\"hidItemIDDelete\" type=\"hidden\""
-							+ "value=\"" + id + "\">" + "</form></td></tr>";
+					output += "<td><input name='btnUpdate' type='button'"
+							+ "value='Update'"
+							+ "class='btnUpdate btn btn-secondary'></td>"
+							+ "<td><input name='btnRemove' type='button'"
+							+ "value='Remove'"
+							+ "class='btnRemove btn btn-danger' data-id='"+ id + "'>" + "</td></tr>";
 					
 					
 				/*
@@ -190,23 +188,25 @@ public class item {
 				preparedStmt.execute();
 				con.close();
 
-				output = "Deleted successfully";
-			/*
-			 * String newItems = readItems(); output =
-			 * "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
-			 */
+				//output = "Deleted successfully";
+			
+			  String newItems = readItems(); 
+			  output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
+			 
 				
 				
 			} catch (Exception e) {
+			
+			  output =
+			  "{\"status\":\"error\", \"data\":\"Error while deleting the item.\"}";
+			 System.err.println(e.getMessage());
+			 
+				
+				
 			/*
-			 * output =
-			 * "{\"status\":\"error\", \"data\":\"Error while deleting the item.\"}";
+			 * output = "Error while deleting the item.";
 			 * System.err.println(e.getMessage());
 			 */
-				
-				
-				output = "Error while deleting the item.";
-				System.err.println(e.getMessage());
 				
 			}
 
@@ -261,24 +261,25 @@ public class item {
 				preparedStmt.execute();
 				con.close();
 				
-				output = "Updated successfully";
+				//output = "Updated successfully";
 				
-			/*
-			 * String newItems = readItems(); output =
-			 * "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
-			 */
+			
+			 String newItems = readItems(); 
+			 output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
+			
 				
 				
 			} catch (Exception e) {
+	
+			  output = "{\"status\":\"error\", \"data\":\"Error while updating the item.\"}";
+			  System.err.println(e.getMessage());
+			 
+				
+				
 			/*
-			 * output =
-			 * "{\"status\":\"error\", \"data\":\"Error while updating the item.\"}";
+			 * output = "Error while updating the item.";
 			 * System.err.println(e.getMessage());
 			 */
-				
-				
-				output = "Error while updating the item.";
-				System.err.println(e.getMessage());
 				
 			}
 			return output;

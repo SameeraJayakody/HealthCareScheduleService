@@ -7,23 +7,7 @@
     
     
     
-   <%--  <%
-if (request.getParameter("si") != null)
-{
-session.setAttribute("si", request.getParameter("si"));
-session.setAttribute("hi", request.getParameter("hi"));
-session.setAttribute("hn", request.getParameter("hn"));
-session.setAttribute("di", request.getParameter("di"));
-session.setAttribute("dn", request.getParameter("dn"));
-session.setAttribute("sp", request.getParameter("sp"));
-session.setAttribute("d", request.getParameter("d"));
-session.setAttribute("s", request.getParameter("s"));
-session.setAttribute("e", request.getParameter("e"));
-session.setAttribute("r", request.getParameter("r"));
-session.setAttribute("stat", request.getParameter("stat"));
-}
-    
-%>   --%>
+   
 
 
 
@@ -31,7 +15,7 @@ session.setAttribute("stat", request.getParameter("stat"));
 
 
 
-<%
+<%-- <%
 
 
 /* session.setAttribute("statusMsg", "");
@@ -83,18 +67,9 @@ session.setAttribute("statusMsg", stsMsg);
 }
 
 
-%>
+%> --%>
 
 
-
-
-
-
-
-
-
-    
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -141,27 +116,21 @@ ROOM:       <input id="btnRoom" name="btnRoom" type="text" class="form-control f
 
 
 
- <div id="alertSuccess" class="alert alert-success">
-
-  <%
-  out.print(session.getAttribute("statusMsg"));
-  
-  %>
-
-
-</div>
+ <div id="alertSuccess" class="alert alert-success"></div>
 
 <div id="alertError" class="alert alert-danger"></div>
   
    <br>
    
+    <div id="divItemsGrid">
+    
    <%
    
       item itemobj = new item();
       out.print(itemobj.readItems());
    %>
    
-   
+   </div>
    </div>
    </div>
    </div>
