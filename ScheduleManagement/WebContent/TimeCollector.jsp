@@ -92,7 +92,19 @@ session.setAttribute("statusMsg", stsMsg);
 
 Schedule ID:        <input id="btnSid" name="btnSid" type="number" class="form-control form-control-sm" placeholder="Ex:*123456*"><br>
 Hospital ID:     <input id="btnHid" name="btnHid" type="text" class="form-control form-control-sm" placeholder="Ex:*123HP*"><br>
-Hospital Name:   <input id="btnHname" name="btnHname" type="text" class="form-control form-control-sm" placeholder="Ex:*xxxxxx*"><br>
+Hospital Name:  
+ <!-- <input id="btnHname" name="btnHname" type="text" class="form-control form-control-sm" placeholder="Ex:*xxxxxx*"><br>
+ -->
+ 
+   <select id="btnHname" name="btnHname" class="form-control form-control-sm" placeholder="Ex:*General*">     
+						<option value="0">--Select Specialization--</option>     
+						<option value="Nawaloka Hospital">Nawaloka Hospital</option>     
+						<option value="Durdans Hospital">Durdans Hospital</option>
+						<option value="Asiri Hospital">Asiri Hospital</option>     
+						<option value="Lanka Hospital">Lanka Hospital</option>  
+						  	
+					</select>
+                        
 Doctor ID:     <input id="btnDocid" name="btnDocid" type="text" class="form-control form-control-sm" placeholder="Ex:*123AH*"><br>
 Doctor Name:   <input id="btnDocname" name="btnDocname" type="text" class="form-control form-control-sm" placeholder="Ex:*xxxxxx*"><br>
 <!-- SPECIALITY: <input id="btnSpecial" name="btnSpecial" type="text" class="form-control form-control-sm"><br>
