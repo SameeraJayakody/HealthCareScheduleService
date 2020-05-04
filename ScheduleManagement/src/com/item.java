@@ -61,9 +61,6 @@ public class item {
 			  output ="{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
 			 
 				
-				
-			
-
 			} catch (Exception e) {
 				
 			
@@ -71,13 +68,10 @@ public class item {
 			  System.err.println(e.getMessage());
 			 
 				
-			/*
-			 * output = "Error while inserting"; System.err.println(e.getMessage());
-			 */
-				
-				
 			}
 
+			
+				
 			return output;
 		}
 
@@ -88,7 +82,7 @@ public class item {
 		
 		
 		
-		
+		//align=\"center\">
 		
 		public String readItems() {
 			String output = "";
@@ -98,7 +92,7 @@ public class item {
 					return "Error while connecting to the database for reading.";
 				}
 				// Prepare the html table to be displayed
-				output = "<table border=\'1\' align=\"center\"><tr><th>scheduleID</th>"
+				output = "<table border='1'><tr><th>scheduleID</th>"
 						+ "<th>HospitalID</th><th>HospitalName</th>" + "<th>DoctorID</th>" + "<th>DoctorName</th>"
 						+ "<th>Speciality</th>" + "<th>Date</th>" + "<th>StartTime</th>" + "<th>EndTime</th>"
 						+ "<th>RoomNumber</th>" + "<th>Status</th>" + "<th>Update</th>"+ "<th>Remove</th></tr>";
@@ -120,6 +114,11 @@ public class item {
 					String en = rs.getString("EndTime");
 					String rm = rs.getString("RoomNumber");
 					String sts = rs.getString("Status");
+					
+					hn=hn.replace('+',' ');
+					dn=dn.replace('+',' ');
+					st = st.replace("%3A", ":");
+					en = en.replace("%3A", ":");
 					// Add into the html table
 					output += "<tr><td><input id='hidItemIDUpdate'"
 							+ "name='hidItemIDUpdate' type='hidden'"
@@ -144,13 +143,7 @@ public class item {
 							+ "class='btnRemove btn btn-danger' data-id='"+ id + "'>" + "</td></tr>";
 					
 					
-				/*
-				 * output += "<td><form method=\"post\" action=\"TimeCollector.jsp\">" +
-				 * "<input name=\"btnRemove\" " +
-				 * " type=\"submit\" value=\"Remove\" action=\"TimeCollector.jsp\">" +
-				 * "<input name=\"id\" type=\"hidden\" " + " value=\"" + id + "\">" +
-				 * "</form></td></tr>";
-				 */
+				
 				}
 				con.close();
 				// Complete the html table
@@ -298,16 +291,16 @@ public class item {
 					return "Error while connecting to the database for reading.";
 				}
 				// Prepare the html table to be displayed
-				output = "<table border=\"1\" align=\"center\"><tr><th>scheduleID</th>"
+				output = "<table border='1'><tr><th>scheduleID</th>"
 						+ "<th>HospitalName</th><th>DoctorName</th>" + "<th>Speciality</th>" + "<th>Date</th>"
-						+ "<th>StartTime</th>" + "<th>EndTime</th>" + "<th>RoomNumber</th>" + "<th>Status</th>";
+						+ "<th>StartTime</th>" + "<th>EndTime</th>" + "<th>RoomNumber</th>" + "<th>Status</th>" + "<th>Update</th>";
 
 				String query = "select * from schedule";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 				// iterate through the rows in the result set
 				while (rs.next()) {
-					String id = rs.getString("ID");
+					int id = rs.getInt("ID");
 					String sid = rs.getString("scheduleID");
 					String hn = rs.getString("HospitalName");
 					String dn = rs.getString("DoctorName");
@@ -319,7 +312,9 @@ public class item {
 					String sts = rs.getString("Status");
 
 					// Add into the html table
-					output += "<tr><td>" + sid + "</td>";
+					output += "<tr><td><input id='hidItemIDUpdate'"
+							+ "name='hidItemIDUpdate' type='hidden'"
+							+ "value='" + id + "'>" + sid + "</td>";
 					output += "<td>" + hn + "</td>";
 					output += "<td>" + dn + "</td>";
 					output += "<td>" + sp + "</td>";
@@ -328,24 +323,22 @@ public class item {
 					output += "<td>" + en + "</td>";
 					output += "<td>" + rm + "</td>";
 					output += "<td>" + sts + "</td>";
-					/*
-					 * output += "<td>" + rm + "</td>"; output += "<td>" + sts + "</td>";
-					 */
-					// buttons
-					/*
-					 * output += "<td><input name=\"btnRemove\" " +
-					 * " type=\"button\" value=\"Update\"></td>" +
-					 * "<td><form method=\"post\" action=\"TimeCollector.jsp\">" +
-					 * "<input name=\"btnRemove\" " +
-					 * " type=\"submit\" value=\"Update\" action=\"TimeCollector.jsp\">" +
-					 * "<input name=\"id\" type=\"hidden\" " + " value=\"" + id + "\">" +
-					 * "</form></td></tr>";
-					 */
-
+					
+					output += "<td><input name='btnUpdate' type='button'"
+							+ "value='Update'"
+							+ "class='btnUpdate btn btn-secondary'></td></tr>";
+				/*
+				 * + "<td><input name='btnRemove' type='button'" + "value='Remove'" +
+				 * "class='btnRemove btn btn-danger' data-id='"+ id + "'>" + "</td></tr>";
+				 */
+					
+					
 				}
 				con.close();
+				
 				// Complete the html table
 				output += "</table>";
+				
 			} catch (Exception e) {
 				output = "Error while reading the items.";
 				System.err.println(e.getMessage());
@@ -594,7 +587,7 @@ public class item {
 		// Update only status for the given schedule id (Service method)
 		// -----------------------------------------
 
-		public String updateDoctorStatus(String id, String status) {
+		public String updateDoctorStatus(String id,String sid, String status) {
 			String output = "";
 
 			try {
@@ -605,23 +598,32 @@ public class item {
 				}
 
 				// create a prepared statement
+				
+				String query = "UPDATE schedule SET Status=?, scheduleID=? WHERE ID=?";
 
-				String query = "UPDATE schedule SET Status=? WHERE scheduleID=?";
+				//String query = "UPDATE schedule SET Status=? WHERE scheduleID=?";
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 				// binding values
 
 				preparedStmt.setString(1, status);
-				preparedStmt.setString(2, id);
+				preparedStmt.setInt(2, Integer.parseInt(sid));
+				preparedStmt.setInt(3, Integer.parseInt(id));
 				// execute the statement
 				preparedStmt.execute();
 				con.close();
 
-				output = "Updated successfully";
-
+				 String newItems = DisplayDoctor(); 
+				 output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
+				 
+				 
 			} catch (Exception e) {
-				output = "Error while updating the item.";
-				System.err.println(e.getMessage());
+				
+				 output = "{\"status\":\"error\", \"data\":\"Error while updating the item.\"}";
+				  System.err.println(e.getMessage());
+				 
 			}
+			
+			System.out.print(output);
 			return output;
 		}
 		
@@ -780,7 +782,7 @@ public class item {
 				output = "<table border=\"1\" align=\"center\"><tr><th>scheduleID</th>"
 						+ "<th>HospitalID</th><th>HospitalName</th>" + "<th>DoctorID</th>" + "<th>DoctorName</th>"
 						+ "<th>Speciality</th>" + "<th>Date</th>" + "<th>StartTime</th>" + "<th>EndTime</th>"
-						+ "<th>RoomNumber</th>" + "<th>Status</th>" + "<th>Remove</th></tr>";
+						+ "<th>RoomNumber</th>" + "<th>Status</th></tr>";
 
 				String query = "select * from schedule where `DoctorName` like '%"+dname +"%' and `DoctorID` like '%"+idd +"%'";
 				Statement stmt = con.createStatement();
@@ -812,9 +814,13 @@ public class item {
 					output += "<td>" + rm + "</td>";
 					output += "<td>" + sts + "</td>";
 					// buttons
-					output += "<td><form method=\"post\" action=\"TimeCollector.jsp\">" + "<input name=\"btnRemove\" "
-							+ " type=\"submit\" value=\"Remove\" action=\"TimeCollector.jsp\">"
-							+ "<input name=\"id\" type=\"hidden\" " + " value=\"" + id + "\">" + "</form></td></tr>";
+				/*
+				 * output += "<td><form method=\"post\" action=\"TimeCollector.jsp\">" +
+				 * "<input name=\"btnRemove\" " +
+				 * " type=\"submit\" value=\"Remove\" action=\"TimeCollector.jsp\">" +
+				 * "<input name=\"id\" type=\"hidden\" " + " value=\"" + id + "\">" +
+				 * "</form></td></tr>";
+				 */
 				}
 				con.close();
 				// Complete the html table

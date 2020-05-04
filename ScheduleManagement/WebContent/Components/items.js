@@ -43,10 +43,6 @@ $.ajax(
 		}
 		});
 
-
-
-// If valid------------------------
-           //   $("#formItem").submit();
 });
 
 
@@ -128,9 +124,6 @@ $("#alertError").show();
 }
 }
 
-
-
-
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
@@ -153,14 +146,39 @@ function validateItemForm()
 // CODE
 if ($("#btnSid").val().trim() == "")
 {
-return "Insert schedule ID.";
+	return "Insert schedule ID.";
+
+
+} 
+
+
+ if($("#btnSid").val().length != 6)
+{
+	 
+   return "Schedule id required atleast 6 characters";
 }
+
+   var sid = $("#btnSid").val().trim(); 
+ 
+ if(!$.isNumeric(sid))
+ {
+	 return "Schedule id must be numerical value";
+	 
+ }
+
 // NAME
 if ($("#btnHid").val().trim() == "")
 {
 return "Insert Hospital ID.";
 }
 
+var re = /^[0-9]{3}[hH][pP]$/
+var hid = $("#btnHid").val().trim()
+
+if(re.test(hid)== false)
+{
+ return "Please enter valid Hospital id"	
+}
 
 //PRICE-------------------------------
 if ($("#btnHname").val().trim() == "")
@@ -175,11 +193,22 @@ return "Insert a numerical value for Item Price.";
 }*/
 // convert to decimal price
 /*$("#itemPrice").val(parseFloat(tmpPrice).toFixed(2));*/
-// DESCRIPTION------------------------
+// DESCRIPTION---------------------------------------------------------
 if ($("#btnDocid").val().trim() == "")
 {
 return "Insert Doctor ID.";
 }
+
+
+var se = /^[0-5]{3}[aA][hH]$/
+var did = $("#btnDocid").val().trim()
+
+	if(se.test(did)== false)
+	{
+	 return "Please enter valid Doctor id"	
+	}
+
+
 
 if ($("#btnDocname").val().trim() == "")
 {
@@ -196,6 +225,13 @@ if ($("#btnDate").val().trim() == "")
 return "Insert Date.";
 }
 
+//var d = new Date();
+//var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+
+//var strDate = (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+
+
+
 if ($("#btnStart").val().trim() == "")
 {
 return "Insert Starat Time.";
@@ -210,6 +246,16 @@ if ($("#btnRoom").val().trim() == "")
 {
 return "Insert Room Number.";
 }
+
+
+var room = $("#btnRoom").val().trim(); 
+
+if(!$.isNumeric(room))
+{
+return "Room number must be a number";
+}
+
+
 if ($("#stat").val().trim() == "")
 {
 return "Insert Status.";

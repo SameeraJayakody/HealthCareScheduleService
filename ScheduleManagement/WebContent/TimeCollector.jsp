@@ -77,7 +77,7 @@ session.setAttribute("statusMsg", stsMsg);
 <link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.2.1.min.js"></script>
 <script src="Components/items.js"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -88,19 +88,47 @@ session.setAttribute("statusMsg", stsMsg);
 <div class="col-6">
 
 <h1>Schedule Management</h1>
-<form id="formItem" name="formItem" method="post" action="TimeCollector.jsp" align="center">
+<form id="formItem" name="formItem" method="post" action="TimeCollector.jsp">
 
-SID:        <input id="btnSid" name="btnSid" type="number" class="form-control form-control-sm"><br>
-HOS_ID:     <input id="btnHid" name="btnHid" type="text" class="form-control form-control-sm"><br>
-HOS_NAME:   <input id="btnHname" name="btnHname" type="text" class="form-control form-control-sm"><br>
-DOC_ID:     <input id="btnDocid" name="btnDocid" type="text" class="form-control form-control-sm"><br>
-DOC_NAME:   <input id="btnDocname" name="btnDocname" type="text" class="form-control form-control-sm"><br>
-SPECIALITY: <input id="btnSpecial" name="btnSpecial" type="text" class="form-control form-control-sm"><br>
-DATE:       <input id="btnDate" name="btnDate" type="date" class="form-control form-control-sm"><br>
-START:      <input id="btnStart" name="btnStart" type="time" class="form-control form-control-sm"><br>
-END:        <input id="btnEnd" name="btnEnd" type=time class="form-control form-control-sm"><br>
-ROOM:       <input id="btnRoom" name="btnRoom" type="text" class="form-control form-control-sm"><br>
-<label for="cars" class="form-control form-control-sm">Status:</label>
+Schedule ID:        <input id="btnSid" name="btnSid" type="number" class="form-control form-control-sm" placeholder="Ex:*123456*"><br>
+Hospital ID:     <input id="btnHid" name="btnHid" type="text" class="form-control form-control-sm" placeholder="Ex:*123HP*"><br>
+Hospital Name:   <input id="btnHname" name="btnHname" type="text" class="form-control form-control-sm" placeholder="Ex:*xxxxxx*"><br>
+Doctor ID:     <input id="btnDocid" name="btnDocid" type="text" class="form-control form-control-sm" placeholder="Ex:*123AH*"><br>
+Doctor Name:   <input id="btnDocname" name="btnDocname" type="text" class="form-control form-control-sm" placeholder="Ex:*xxxxxx*"><br>
+<!-- SPECIALITY: <input id="btnSpecial" name="btnSpecial" type="text" class="form-control form-control-sm"><br>
+ -->
+
+Specialization:    
+					<select id="btnSpecial" name="btnSpecial" class="form-control form-control-sm" placeholder="Ex:*General*">     
+						<option value="0">--Select Specialization--</option>     
+						<option value="Accupuncture">Accupuncture</option>     
+						<option value="Anaesthesiologist">Anaesthesiologist</option>
+						<option value="Allergy Specialist">Allergy Specialist</option>     
+						<option value="Bacteriologist">Bacteriologist</option>     
+						<option value="Cardiologist">Cardiologist</option>
+						<option value="Cardiac Surgeon">Cardiac Surgeon</option>
+						<option value="Counsellor">Counsellor</option>
+						<option value="Dentist">Dentist</option>
+						<option value="Dietician">Dietician</option>
+						<option value="Embryologist">Embryologist</option>
+						<option value="Endocnnologist">Endocnnologist</option>
+						<option value="Ent And Neck Surgeon">Ent And Neck Surgeon</option>
+						<option value="General">General</option>
+						<option value="Hepatologists">Hepatologists</option>
+						<option value="Immunologist">Immunologist</option> 
+						<option value="Mycologist">Mycologist</option> 
+						<option value="Neurologist">Neurologist</option>   
+						<option value="Urologist">Urologist</option>
+						  	
+					</select>
+					<br>
+
+Schedule Date:       <input id="btnDate" name="btnDate" type="date" class="form-control form-control-sm"><br>
+Start Time:      <input id="btnStart" name="btnStart" type="time" class="form-control form-control-sm"><br>
+End Time:        <input id="btnEnd" name="btnEnd" type=time class="form-control form-control-sm"><br>
+Room Number:       <input id="btnRoom" name="btnRoom" type="text" class="form-control form-control-sm" placeholder="Ex:*10*"><br>
+
+Status:
   <select id="stat" name="stat" class="form-control form-control-sm">
     <option value="YES">YES</option>
      <option value="NO" selected>NO</option>
@@ -131,6 +159,8 @@ ROOM:       <input id="btnRoom" name="btnRoom" type="text" class="form-control f
    %>
    
    </div>
+   
+   
    </div>
    </div>
    </div>
